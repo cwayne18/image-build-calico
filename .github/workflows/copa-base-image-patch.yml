@@ -251,8 +251,6 @@ jobs:
 
       - name: Patch image with Copa
         id: copa
-      - name: Patch image with Copa
-        id: copa
         uses: project-copacetic/copa-action@3843e22efdca421adb37aa8dec103a0f1db68544 # v1
         with:
           image: ${{ needs.scan.outputs.source_image }}
