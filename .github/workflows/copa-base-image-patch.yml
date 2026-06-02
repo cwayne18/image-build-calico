@@ -5,11 +5,14 @@ on:
     - cron: '0 7 * * *'
   workflow_dispatch:
 
+concurrency:
+  group: copa-base-image-patch
+  cancel-in-progress: false
+
 permissions:
   contents: read
   id-token: write
   security-events: write
-
 env:
   PRIME_REPO: rancher
   IMAGE_NAME: hardened-calico
