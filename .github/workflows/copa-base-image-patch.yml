@@ -249,11 +249,13 @@ jobs:
 
       - name: Patch image with Copa
         id: copa
+      - name: Patch image with Copa
+        id: copa
         uses: project-copacetic/copa-action@3843e22efdca421adb37aa8dec103a0f1db68544 # v1
         with:
           image: ${{ needs.scan.outputs.source_image }}
           image-report: trivy-report.json
-          patched-tag: ${{ needs.scan.outputs.target_image }}
+          patched-tag: ${{ needs.scan.outputs.target_tag }}
           timeout: 10m
 
       - name: Push patched image to Prime
