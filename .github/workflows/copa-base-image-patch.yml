@@ -102,8 +102,7 @@ jobs:
           today_base_tag="${version}-build${build_date}"
           last_patch="$(
             echo "${tags_json}" \
-              | jq -r '.Tags[]' \
-              | grep -E "^${today_base_tag}-patch[0-9]+$" \
+              | jq -r --arg prefix "${today_base_tag}-patch" '.Tags[] | select(startswith($prefix))' \
               | sed -E 's/^.*-patch([0-9]+)$/\1/' \
               | sort -n \
               | tail -n1 || true
