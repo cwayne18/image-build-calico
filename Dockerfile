@@ -1,5 +1,5 @@
 ARG ARCH=${TARGETARCH}
-ARG BCI_IMAGE=registry.suse.com/bci/bci-base
+ARG BCI_IMAGE=registry.suse.com/bci/bci-nano:16.0
 ARG GO_IMAGE=rancher/hardened-build-base:v1.25.11b1
 ARG CNI_IMAGE_VERSION=v1.9.1-build20260608
 ARG CNI_IMAGE=rancher/hardened-cni-plugins:${CNI_IMAGE_VERSION}
@@ -232,7 +232,7 @@ RUN cat /tmp/packages.txt | sed 's/#.*//' | xargs zypper addlock
 
 # Trim unnessary packages from the container image
 RUN zypper -n clean -a
-RUN zypper addlock libaugeas0 libsolv-tools-base libxml2-2
+RUN zypper addlock libaugeas0 libsolv-tools-base libxml2-2 || true
 RUN zypper rm --clean-deps --no-confirm \
     gpg2 \
     libcurl4 \
@@ -240,8 +240,8 @@ RUN zypper rm --clean-deps --no-confirm \
     libssh4 \
     libzypp \
     openssl \
-    tar
-RUN rpm -e libaugeas0 libsolv-tools-base libxml2-2
+    tar || true
+RUN rpm -e libaugeas0 libsolv-tools-base libxml2-2 || true
 
 # Verify required packages
 RUN cat /tmp/packages.txt | sed 's/#.*//' | xargs rpm -q
